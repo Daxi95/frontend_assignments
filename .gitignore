@@ -1,0 +1,11 @@
+# system
+.DS_Store
+
+# IDE
+.idea/
+
+# logs
+npm-debug.log
+
+# deps
+node_modules/
