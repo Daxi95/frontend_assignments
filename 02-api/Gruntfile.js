@@ -11,6 +11,18 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
+    sass: {
+      options: {
+        outputStyle: 'compressed',
+        sourceMap: false
+      },
+      dist: {
+        files: {
+          './dist/css/main.css': './src/scss/main.scss'
+        }
+      }
+    },
+
     browserify: {
       watch: {
         files: {
@@ -81,11 +93,25 @@ module.exports = function(grunt) {
         options: {
           livereload: true
         }
+      },
+      html: {
+        files: ['./src/**/*.html'],
+        tasks: ['copy'],
+        options: {
+          livereload: true
+        }
+      },
+      sass: {
+        files: ['./src/**/*.scss'],
+        tasks: ['sass'],
+        options: {
+          livereload: true
+        }
       }
     }
   })
 
-  grunt.registerTask('default', ['clean', 'copy', 'browserify:dist'])
+  grunt.registerTask('default', ['clean', 'copy', 'browserify:dist', 'sass'])
   grunt.registerTask('start', ['default', 'connect', 'watch'])
 
 }

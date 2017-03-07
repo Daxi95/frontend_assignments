@@ -1,0 +1,22 @@
+<table class="table">
+  <thead class="thead-default">
+      <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Nationality</th>
+          <th>Birthday</th>
+          <th>Wikipedia</th>
+      </tr>
+  </thead>
+  <tbody>
+      {{#each this}}
+          <tr>
+              <td><a href="drivers/{{driverId}}">{{givenName}}</a></td>
+              <td><a href="drivers/{{driverId}}">{{familyName}}</a></td>
+              <td>{{nationality}}</td>
+              <td>{{dateOfBirth}}</td>
+              <td><a href="{{url}}">Wiki</a></td>
+          </tr>
+      {{/each}}
+  </tbody>
+</table>
