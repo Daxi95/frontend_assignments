@@ -60,19 +60,6 @@ function fetchData(resource, id, opts) {
     })
 }
 
-function fetchSingle(resource, id, opts) {
-  let response;
-  let {limit = 30, offset = 0} = opts;
-
-  response =  fetch(`${config.api.url}/${resource}.json?limit=${limit}&offset=${offset}`);
-
-  //response =  fetch(`${config.api.url}/${resource}/${id}.json`);
-  /*Promise.all(
-   fetch(`${config.api.url}/drivers/${rows.driverId}/constructors.json`)
-   .then()
-   )*/
-}
-
 function resourcePath(resource, data) {
   let table = pluralize.singular(resource);
   table = table[0].toUpperCase() + table.slice(1) + "Table";
