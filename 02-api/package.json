@@ -31,6 +31,7 @@
     "uglifyify": "^3.0.4"
   },
   "dependencies": {
-    "pagination": "^0.4.4"
+    "pagination": "^0.4.4",
+    "pluralize": "^4.0.0"
   }
 }
