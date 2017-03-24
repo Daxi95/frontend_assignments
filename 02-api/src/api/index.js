@@ -18,7 +18,7 @@ export default Object.freeze({
 
 function fetchData(resource, id, opts) {
   let response;
-  let {limit = 30, offset = 0} = opts;
+  let {limit = 10, offset = 0} = opts;
 
   if(id)
     response =  fetch(`${config.api.url}/${resource + "/" + id}.json?limit=${limit}&offset=${offset}`);
@@ -31,7 +31,7 @@ function fetchData(resource, id, opts) {
 
       let rows = resourcePath(resource, data);
 
-      if(opts.include) {    //bei include alle zugehörigen driver/constructor fetchen
+      if(opts.include) {    //bei include z.B. alle zugehörigen driver/constructor fetchen
         let includes = [];
         let resourceSingularId = pluralize.singular(resource) + "Id";
         rows.map(row => {

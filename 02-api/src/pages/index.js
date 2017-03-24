@@ -10,7 +10,7 @@ import tplConstructor from '../templates/constructor.hbs';
 import tplNotFound from '../templates/not-found.hbs';
 
 const $app = $('#app');
-const limit = 30;
+const limit = 10;
 var offset = 0;
 
 export function notFound() {
