@@ -24,8 +24,7 @@ export function drivers(ctx) {
   api
     .get('drivers', {include: 'constructors', limit: limit, offset: offset})
     .then(({resource, total}) => {
-      var paginator = pagination.create('search', {prelink: '/drivers', current: pageNumber, rowsPerPage: limit, totalResult: total});
-      $app.html(paginator.render() + tplDrivers(resource));
+      renderData(tplDrivers(resource), {prelink: '/drivers', current: pageNumber, rowsPerPage: limit, totalResult: total})
     })
 
 }
@@ -39,7 +38,7 @@ export function driver(ctx) {
         driver:  driver,
         constructor:  driver.constructors[0]
       });
-      $app.html(content);
+      renderData(content);
     })
 }
 
@@ -47,13 +46,12 @@ export function constructors(ctx) {
   var pageNumber = getPageNumber(ctx);
   offset = (pageNumber-1) * limit;
 
+  //api.get('constructors', {include: 'drivers', limit: limit, offset: offset})   --> constructors with drivers
+
   api
-    //.get('constructors', {include: 'drivers', limit: limit, offset: offset})
     .get('constructors', {limit: limit, offset: offset})
     .then(({resource, total}) => {
-      drivers
-      var paginator = pagination.create('search', {prelink: '/constructors', current: pageNumber, rowsPerPage: limit, totalResult: total});
-      $app.html(paginator.render() + tplConstructors(resource));
+      renderData(tplConstructors(resource), {prelink: '/constructors', current: pageNumber, rowsPerPage: limit, totalResult: total})
     })
 }
 
@@ -66,8 +64,18 @@ export function constructor(ctx) {
         drivers:  constructor.drivers,
         constructor:  constructor
       });
-      $app.html(content);
+      renderData(content);
     })
+}
+
+function renderData(content, opts) {
+  if(opts.prelink) {
+    var paginator = pagination.create('search', opts);
+    $app.html(paginator.render() + content);
+  }
+  else {
+    $app.html(content);
+  }
 }
 
 function getPageNumber(ctx) {
