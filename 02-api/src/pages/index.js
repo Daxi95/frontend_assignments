@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import config from '../config';
 import pagination from 'pagination';
 import api from '../api';
 
@@ -24,7 +23,9 @@ export function drivers(ctx) {
   api
     .get('drivers', {include: 'constructors', limit: limit, offset: offset})
     .then(({resource, total}) => {
-      renderData(tplDrivers(resource), {prelink: '/drivers', current: pageNumber, rowsPerPage: limit, totalResult: total})
+      for(var i = 0; i < resource.length; i++)
+        resource[i].lastConstructor = resource[i].constructors[0].name;
+      renderData(tplDrivers(resource), {prelink: '/drivers', current: pageNumber, rowsPerPage: limit, totalResult: total});
     })
 
 }
@@ -69,7 +70,7 @@ export function constructor(ctx) {
 }
 
 function renderData(content, opts) {
-  if(opts.prelink) {
+  if(typeof opts === 'object') {
     var paginator = pagination.create('search', opts);
     $app.html(paginator.render() + content);
   }
