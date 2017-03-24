@@ -35,10 +35,19 @@ export function driver(ctx) {
     .get('drivers', ctx.params.driver, {include: 'constructors'})
     .then(({resource, total}) => {
       driver = resource[0];
-      var content = tplDriver({
+
+      var content = {
         driver:  driver,
-        constructor:  driver.constructors[0]
-      });
+        lastConstructor:  driver.constructors[0]
+      }
+
+      if(driver.constructors.length > 1) {
+        var otherConstructors = driver.constructors.splice(1, driver.constructors.length)
+        content.otherConstructors = otherConstructors;
+      }
+
+      var content = tplDriver(content);
+
       renderData(content);
     })
 }

@@ -4,5 +4,15 @@
     <li><b>Nationality:</b> {{driver.nationality}}</li>
     <li><b>Birthday:</b> {{date driver.dateOfBirth}}</li>
     <li><a href="{{driver.url}}">Wiki</a></li>
-    <li><b>Last Constructor:</b> <a href="/constructors/{{constructor.constructorId}}">{{constructor.name}}</a></li>
+    <li><b>Last constructor:</b> <a href="/constructors/{{lastConstructor.constructorId}}">{{lastConstructor.name}}</a></li>
+    {{#if otherConstructors}}
+        <li>
+            <b>Previous Constructors:</b>
+            <ul>
+              {{#each otherConstructors}}<li><a href="/constructors/{{this.constructorId}}">{{this.name}}</a></li>{{/each}}
+            </ul>
+        </li>
+    {{else}}
+        <li><b>No previous constructors!</b></li>
+    {{/if}}
 </ul>
