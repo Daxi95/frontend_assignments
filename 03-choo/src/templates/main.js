@@ -50,8 +50,9 @@ module.exports = function (state, emit) {
 
   // remove character from state
   function remove (e) {
-    var index = e.target.id
-    emit('removeCharacter', index)
+    var i = e.target.id
+    var type = e.target.attributes.getNamedItem("data-type").nodeValue
+    emit('removeCharacter', {i, type})
   }
 
   function fightOrks() {

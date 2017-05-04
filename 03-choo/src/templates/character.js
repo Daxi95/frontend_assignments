@@ -9,7 +9,7 @@ module.exports = function (character, index, onclick) {
 
     // create html template
     return html`
-        <img class="character" src="/assets/${type}.png" style="left: ${x}px; top: ${y}px;" id=${index} onclick=${onclick}>
+        <img class="character" data-type="${type}" src="/assets/${type}.png" style="left: ${x}px; top: ${y}px;" id=${index} onclick=${onclick}>
       `
    }
    else {

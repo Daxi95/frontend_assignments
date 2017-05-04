@@ -13215,15 +13215,189 @@ function extend(target) {
 }
 
 },{}],34:[function(require,module,exports){
-"use strict";function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}var _choo=require("choo"),_choo2=_interopRequireDefault(_choo),_main=require("./templates/main.js"),_main2=_interopRequireDefault(_main),_emoji=require("./templates/emoji.js"),_emoji2=_interopRequireDefault(_emoji),app=(0,_choo2.default)();app.use(function(e,r){e.characters=[{type:"ork",x:200,y:100},{type:"hobbit",x:100,y:200}],e.deadcharacters=[],r.on("addCharacter",function(a){var t=["ork","hobbit"],o=Math.floor(2*Math.random()),i=a.x,c=a.y,u={type:t[o],x:i,y:c};e.characters.push(u),r.emit("render")}),r.on("removeCharacter",function(a){e.characters.splice(a,1),e.deadcharacters.push({type:"ork"}),r.emit("render")}),r.on("removeAllOrks",function(){for(var a=e.characters.length-1;a>=0;a--)"ork"==e.characters[a].type&&(e.characters.splice(a,1),e.deadcharacters.push({type:"ork"}));r.emit("render")})}),app.route("/",_main2.default),app.route("/emoji",_emoji2.default),app.mount("#app div");
+'use strict';
+
+var _choo = require('choo');
+
+var _choo2 = _interopRequireDefault(_choo);
+
+var _main = require('./templates/main.js');
+
+var _main2 = _interopRequireDefault(_main);
+
+var _emoji = require('./templates/emoji.js');
+
+var _emoji2 = _interopRequireDefault(_emoji);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// initialize choo
+var app = (0, _choo2.default)(); // import choo
+
+
+app.use(function (state, emitter) {
+  // initialize state
+  state.characters = [{ type: 'ork', x: 200, y: 100 }, { type: 'hobbit', x: 100, y: 200 }];
+
+  state.deadcharacters = [];
+
+  // add character
+  emitter.on('addCharacter', function (data) {
+    var characters = ['ork', 'hobbit'];
+
+    var type = Math.floor(Math.random() * 2);
+    var x = data.x;
+    var y = data.y;
+
+    var obj = { type: characters[type], x: x, y: y };
+    state.characters.push(obj);
+
+    emitter.emit('render');
+  });
+
+  // remove character
+  emitter.on('removeCharacter', function (character) {
+    state.characters.splice(character.i, 1);
+    if (character.type == 'ork') state.deadcharacters.push({ type: 'ork' });
+    emitter.emit('render');
+  });
+
+  emitter.on('removeAllOrks', function () {
+    for (var i = state.characters.length - 1; i >= 0; i--) {
+      if (state.characters[i].type == 'ork') {
+        state.characters.splice(i, 1);
+        state.deadcharacters.push({ type: 'ork' });
+      }
+    }
+    emitter.emit('render');
+  });
+});
+
+app.route('/', _main2.default);
+app.route('/emoji', _emoji2.default);
+
+// start app
+app.mount('#app div');
 
 },{"./templates/emoji.js":36,"./templates/main.js":37,"choo":6}],35:[function(require,module,exports){
-"use strict";function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _taggedTemplateLiteral(e,t){return Object.freeze(Object.defineProperties(e,{raw:{value:Object.freeze(t)}}))}var _templateObject=_taggedTemplateLiteral(['\n        <img class="character" src="/assets/','.png" style="left: ',"px; top: ",'px;" id='," onclick=",">\n      "],['\n        <img class="character" src="/assets/','.png" style="left: ',"px; top: ",'px;" id='," onclick=",">\n      "]),_templateObject2=_taggedTemplateLiteral(['<img src="/assets/','.png">'],['<img src="/assets/','.png">']),_html=require("choo/html"),_html2=_interopRequireDefault(_html);module.exports=function(e,t,r){if(void 0!=t){var a=e.type,l=e.x,s=e.y;return(0,_html2.default)(_templateObject,a,l,s,t,r)}return(0,_html2.default)(_templateObject2,e.type)};
+'use strict';
+
+var _templateObject = _taggedTemplateLiteral(['\n        <img class="character" data-type="', '" src="/assets/', '.png" style="left: ', 'px; top: ', 'px;" id=', ' onclick=', '>\n      '], ['\n        <img class="character" data-type="', '" src="/assets/', '.png" style="left: ', 'px; top: ', 'px;" id=', ' onclick=', '>\n      ']),
+    _templateObject2 = _taggedTemplateLiteral(['<img src="/assets/', '.png">'], ['<img src="/assets/', '.png">']);
+
+var _html = require('choo/html');
+
+var _html2 = _interopRequireDefault(_html);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); } // import choo's template helper
+
+
+module.exports = function (character, index, onclick) {
+  if (index != undefined) {
+    var type = character.type;
+    var x = character.x;
+    var y = character.y;
+
+    // create html template
+    return (0, _html2.default)(_templateObject, type, type, x, y, index, onclick);
+  } else {
+    return (0, _html2.default)(_templateObject2, character.type);
+  }
+};
 
 },{"choo/html":5}],36:[function(require,module,exports){
-"use strict";function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _taggedTemplateLiteral(e,t){return Object.freeze(Object.defineProperties(e,{raw:{value:Object.freeze(t)}}))}var _templateObject=_taggedTemplateLiteral(['\n      <div class="container">\n          <p>Dynamic Route '," "," ","</p>\n      </div>\n    "],['\n      <div class="container">\n          <p>Dynamic Route '," "," ","</p>\n      </div>\n    "]),_html=require("choo/html"),_html2=_interopRequireDefault(_html),_nodeEmoji=require("node-emoji"),_nodeEmoji2=_interopRequireDefault(_nodeEmoji);module.exports=function(e,t){return(0,_html2.default)(_templateObject,_nodeEmoji2.default.get("coffee"),_nodeEmoji2.default.get("beer"),_nodeEmoji2.default.get("beers"))};
+'use strict';
+
+var _templateObject = _taggedTemplateLiteral(['\n      <div class="container">\n          <p>Dynamic Route ', ' ', ' ', '</p>\n      </div>\n    '], ['\n      <div class="container">\n          <p>Dynamic Route ', ' ', ' ', '</p>\n      </div>\n    ']);
+
+var _html = require('choo/html');
+
+var _html2 = _interopRequireDefault(_html);
+
+var _nodeEmoji = require('node-emoji');
+
+var _nodeEmoji2 = _interopRequireDefault(_nodeEmoji);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); } // import choo's template helper
+
+
+//export module
+module.exports = function (state, emit) {
+    // create html template
+    return (0, _html2.default)(_templateObject, _nodeEmoji2.default.get('coffee'), _nodeEmoji2.default.get('beer'), _nodeEmoji2.default.get('beers'));
+};
 
 },{"choo/html":5,"node-emoji":22}],37:[function(require,module,exports){
-"use strict";function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _taggedTemplateLiteral(e,t){return Object.freeze(Object.defineProperties(e,{raw:{value:Object.freeze(t)}}))}var _templateObject=_taggedTemplateLiteral(['\n  <div class="container">\n    <button onclick=',">Add Random Character</button>\n    <button onclick=",">Fight</button>\n    <p>You can also click on the field to add/remove characters ",'</p>\n    <div class="field">\n      <div class="grass" onclick=',"></div>\n      ",'\n    </div>\n    <h2>Ork Graveyard</h2>\n    <div class="graveyard">\n      ',"\n    </div>\n  </div>\n  "],['\n  <div class="container">\n    <button onclick=',">Add Random Character</button>\n    <button onclick=",">Fight</button>\n    <p>You can also click on the field to add/remove characters ",'</p>\n    <div class="field">\n      <div class="grass" onclick=',"></div>\n      ",'\n    </div>\n    <h2>Ork Graveyard</h2>\n    <div class="graveyard">\n      ',"\n    </div>\n  </div>\n  "]),_html=require("choo/html"),_html2=_interopRequireDefault(_html),_nodeEmoji=require("node-emoji"),_nodeEmoji2=_interopRequireDefault(_nodeEmoji),_jquery=require("jquery"),_jquery2=_interopRequireDefault(_jquery),_character=require("./character.js"),_character2=_interopRequireDefault(_character);module.exports=function(e,t){function r(e,t){return(0,_character2.default)(e,t,i)}function a(e){var r=e.offsetX,a=e.offsetY;t("addCharacter",{x:r,y:a})}function n(){var e=Math.floor(Math.random()*((0,_jquery2.default)(".field").width()-40)),r=Math.floor(Math.random()*((0,_jquery2.default)(".field").height()-40));t("addCharacter",{x:e,y:r})}function i(e){var r=e.target.id;t("removeCharacter",r)}function c(){t("removeAllOrks")}return(0,_html2.default)(_templateObject,n,c,_nodeEmoji2.default.get("beers"),a,e.characters.map(r),e.deadcharacters.map(function(e){return(0,_character2.default)({type:e.type})}))};
+'use strict';
+
+var _templateObject = _taggedTemplateLiteral(['\n  <div class="container">\n    <button onclick=', '>Add Random Character</button>\n    <button onclick=', '>Fight</button>\n    <p>You can also click on the field to add/remove characters ', '</p>\n    <div class="field">\n      <div class="grass" onclick=', '></div>\n      ', '\n    </div>\n    <h2>Ork Graveyard</h2>\n    <div class="graveyard">\n      ', '\n    </div>\n  </div>\n  '], ['\n  <div class="container">\n    <button onclick=', '>Add Random Character</button>\n    <button onclick=', '>Fight</button>\n    <p>You can also click on the field to add/remove characters ', '</p>\n    <div class="field">\n      <div class="grass" onclick=', '></div>\n      ', '\n    </div>\n    <h2>Ork Graveyard</h2>\n    <div class="graveyard">\n      ', '\n    </div>\n  </div>\n  ']);
+
+var _html = require('choo/html');
+
+var _html2 = _interopRequireDefault(_html);
+
+var _nodeEmoji = require('node-emoji');
+
+var _nodeEmoji2 = _interopRequireDefault(_nodeEmoji);
+
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _character = require('./character.js');
+
+var _character2 = _interopRequireDefault(_character);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); } // import choo's template helper
+
+
+// import template
+
+
+//export module
+module.exports = function (state, emit) {
+  // create html template
+  return (0, _html2.default)(_templateObject, addAtRandPosition, fightOrks, _nodeEmoji2.default.get('beers'), add, state.characters.map(characterMap), state.deadcharacters.map(function (char) {
+    return (0, _character2.default)({ type: char.type });
+  }));
+
+  // map function
+  function characterMap(obj, i) {
+    return (0, _character2.default)(obj, i, remove);
+  }
+
+  // add new character to state
+  function add(e) {
+    var x = e.offsetX;
+    var y = e.offsetY;
+    var obj = { x: x, y: y };
+    emit('addCharacter', obj);
+  }
+
+  // add new character by button click
+  function addAtRandPosition() {
+    var x = Math.floor(Math.random() * ((0, _jquery2.default)('.field').width() - 40));
+    var y = Math.floor(Math.random() * ((0, _jquery2.default)('.field').height() - 40));
+    var obj = { x: x, y: y };
+    emit('addCharacter', obj);
+  }
+
+  // remove character from state
+  function remove(e) {
+    var i = e.target.id;
+    var type = e.target.attributes.getNamedItem("data-type").nodeValue;
+    emit('removeCharacter', { i: i, type: type });
+  }
+
+  function fightOrks() {
+    emit('removeAllOrks');
+  }
+};
 
 },{"./character.js":35,"choo/html":5,"jquery":12,"node-emoji":22}]},{},[34]);

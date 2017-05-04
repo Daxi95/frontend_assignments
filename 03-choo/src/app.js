@@ -31,9 +31,10 @@ app.use(function (state, emitter) {
   })
 
   // remove character
-  emitter.on('removeCharacter', function (i) {
-    state.characters.splice(i, 1)
-    state.deadcharacters.push({type: 'ork'})
+  emitter.on('removeCharacter', function (character) {
+    state.characters.splice(character.i, 1)
+    if(character.type == 'ork')
+      state.deadcharacters.push({type: 'ork'})
     emitter.emit('render')
   })
 
