@@ -5,7 +5,7 @@
         <th>Last Name</th>
         <th>Nationality</th>
         <th>Birthday</th>
-        {{#if lastConstructor}}<th>Last Constructor</th>{{/if}}
+        <th>Last Constructor</th>
         <th>Wikipedia</th>
     </tr>
     </thead>
@@ -16,7 +16,11 @@
             <td><a href="/drivers/{{driverId}}">{{familyName}}</a></td>
             <td>{{nationality}}</td>
             <td>{{date dateOfBirth}}</td>
-            {{#if lastConstructor}}<td>{{lastConstructor}}</td>{{/if}}
+          {{#if lastConstructor}}
+              <td>{{lastConstructor}}</td>
+          {{else}}
+              <td>-</td>
+          {{/if}}
             <td><a href="{{url}}">Wiki</a></td>
         </tr>
     {{/each}}
