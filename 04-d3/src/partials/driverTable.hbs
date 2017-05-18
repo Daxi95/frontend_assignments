@@ -1,0 +1,24 @@
+<table class="table">
+    <thead class="thead-default">
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Nationality</th>
+        <th>Birthday</th>
+        {{#if lastConstructor}}<th>Last Constructor</th>{{/if}}
+        <th>Wikipedia</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each this}}
+        <tr>
+            <td><a href="/drivers/{{driverId}}">{{givenName}}</a></td>
+            <td><a href="/drivers/{{driverId}}">{{familyName}}</a></td>
+            <td>{{nationality}}</td>
+            <td>{{date dateOfBirth}}</td>
+            {{#if lastConstructor}}<td>{{lastConstructor}}</td>{{/if}}
+            <td><a href="{{url}}">Wiki</a></td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>
