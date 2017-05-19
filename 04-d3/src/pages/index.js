@@ -7,7 +7,7 @@ import tplDrivers from '../templates/drivers.hbs';
 import tplDriver from '../templates/driver.hbs';
 import tplConstructors from '../templates/constructors.hbs';
 import tplConstructor from '../templates/constructor.hbs';
-//import tplDiagram from '../templates/diagram.hbs';
+import tplDiagram from '../templates/diagram.hbs';
 import tplNotFound from '../templates/not-found.hbs';
 
 const $app = $('#app');
@@ -83,11 +83,16 @@ export function constructor(ctx) {
 export function diagram(ctx) {
 
   // reset content
-  $app.empty();
+  // $app.empty();
+
+  renderData(tplDiagram({isLoading: true}));
 
   // total drivers: 208
-  api.get('constructors', {include: 'drivers', limit: 10, offset: offset})
+  api.get('constructors', {include: 'drivers', limit: 30, offset: offset})
     .then((response) => {
+
+      renderData(tplDiagram({isLoading: false}));
+
       var resources = response.resource;
       console.log(resources);
 
