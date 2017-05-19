@@ -7,6 +7,7 @@ export default function() {
   page('/drivers/:driver', pages.driver);
   page('/constructors', pages.constructors);
   page('/constructors/:constructor', pages.constructor);
+  page('/diagram', pages.diagram);
   page('*', pages.notFound);
   page();
 }

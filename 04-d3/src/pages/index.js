@@ -1,11 +1,13 @@
 import $ from 'jquery';
 import pagination from 'pagination';
 import api from '../api';
+import d3Tree from '../d3/tree';
 
 import tplDrivers from '../templates/drivers.hbs';
 import tplDriver from '../templates/driver.hbs';
 import tplConstructors from '../templates/constructors.hbs';
 import tplConstructor from '../templates/constructor.hbs';
+//import tplDiagram from '../templates/diagram.hbs';
 import tplNotFound from '../templates/not-found.hbs';
 
 const $app = $('#app');
@@ -76,6 +78,36 @@ export function constructor(ctx) {
       });
       renderData(content);
     })
+}
+
+export function diagram(ctx) {
+
+  // reset content
+  $app.empty();
+
+  // total drivers: 208
+  api.get('constructors', {include: 'drivers', limit: 10, offset: offset})
+    .then((response) => {
+      var resources = response.resource;
+      console.log(resources);
+
+      var json = {
+        name: "F1",
+        children: []
+      };
+
+      resources.map((resource) => {
+        var drivers = [];
+        resource.drivers.map((driver) => {
+          drivers.push({name: driver.givenName + " " + driver.familyName});
+        });
+        json.children.push({name: resource.name, children: drivers});
+      });
+
+      // render tree
+      d3Tree("#app", json);
+    });
+
 }
 
 function renderData(content, opts) {
