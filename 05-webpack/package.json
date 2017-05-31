@@ -8,7 +8,7 @@
     "build": "npm run clean && webpack --env=prod --config ./webpack.config.babel.js -p",
     "start": "webpack-dev-server --env=dev --open"
   },
-  "author": "Hannes Moser <hannes@impossiblearts.com>",
+  "author": "David Daxbacher <ddaxbacher.mmt-b2015@fh-salzburg.ac.at>",
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.18.0",

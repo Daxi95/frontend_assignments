@@ -7,7 +7,7 @@
     "build": "grunt",
     "start": "grunt start"
   },
-  "author": "Hannes Moser <hannes@impossiblearts.com>",
+  "author": "David Daxbacher <ddaxbacher.mmt-b2015@fh-salzburg.ac.at>",
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.18.0",
