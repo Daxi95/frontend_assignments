@@ -4,8 +4,9 @@
   "description": "Second Assignment for Frontend Development 1",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config ./webpack.config.babel.js",
-    "start": "webpack-dev-server --history-api-fallback"
+    "clean": "rimraf dist",
+    "build": "npm run clean && webpack --env=prod --config ./webpack.config.babel.js -p",
+    "start": "webpack-dev-server --env=dev --open"
   },
   "author": "Hannes Moser <hannes@impossiblearts.com>",
   "license": "MIT",
@@ -29,7 +30,8 @@
     "style-loader": "^0.18.1",
     "uglifyify": "^3.0.4",
     "webpack": "^2.6.0",
-    "webpack-dev-server": "^2.4.5"
+    "webpack-dev-server": "^2.4.5",
+    "webpack-merge": "^4.1.0"
   },
   "dependencies": {
     "d3": "^4.9.1",
